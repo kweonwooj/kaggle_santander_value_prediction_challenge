@@ -45,18 +45,20 @@ def check_kaggle_result(competition, fname=None):
     for line in result:
         if line == '':
             break
-
-        lb_score = line.split()[-1]
-        if isinstance(lb_score, float):
+        try:
+            lb_score = float(line.split()[-1])
             if lb_score < best_lb:
                 best_lb = lb_score
-                line += '(BEST) '
+        except:
+            pass
 
+    print('')
     for line in result:
         if 'Warning' in line:
             continue
-
         if fname is not None and fname in line:
             line += '(THIS) '
+        if str(best_lb) in line:
+            line += '(BEST) '
         print(line)
 
