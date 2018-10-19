@@ -1,7 +1,7 @@
 # Kaggle/Santander Product Recommendation
 
 <div align="center">
-  <img src="https://goo.gl/images/oBF9bS"><br><br>
+  <img src="rsc/logo.png"><br><br>
 </div>
 
 ## Abstract
