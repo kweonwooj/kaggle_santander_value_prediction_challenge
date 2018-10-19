@@ -1,7 +1,7 @@
 # Kaggle/Santander Product Recommendation
 
 <div align="center">
-  <img src="https://www.google.co.kr/url?sa=i&source=images&cd=&ved=2ahUKEwjeu_GRiZLeAhUOH3AKHfO6CY4QjRx6BAgBEAU&url=https%3A%2F%2Fwww.kaggle.com%2Fc%2Fsantander-value-prediction-challenge&psig=AOvVaw3EhpGHXI1u5lNwbo5eYmKh&ust=1540023604451552"><br><br>
+  <img src="https://goo.gl/images/oBF9bS"><br><br>
 </div>
 
 ## Abstract
