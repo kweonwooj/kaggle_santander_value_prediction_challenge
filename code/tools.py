@@ -1,10 +1,17 @@
 import numpy as np
 import subprocess
 
-
+# eval
 def rmsle(true, pred):
     '''
         evaluation metric for the competition
+
+    Args:
+        true : ground tru values
+        pred : model predictions 
+
+    Returns:
+        root mean squared log error
     '''
     return np.sqrt(np.mean((np.log1p(true) - np.log1p(pred))**2))
 
@@ -12,6 +19,8 @@ def rmsle(true, pred):
 def evaluate(model, x_trn, y_trn, x_val, y_val, fn):
     '''
         evaluate trn, val loss / R2 score / OOB score
+
+    
     '''
     trn_pred = model.predict(x_trn)
     val_pred = model.predict(x_val)
@@ -25,7 +34,7 @@ def evaluate(model, x_trn, y_trn, x_val, y_val, fn):
     if hasattr(model, 'oob_score_') and model.oob_score:
         print('# OOB_score : {}'.format(model.oob_score_))
 
-
+# submit
 def submit_kaggle_result(competition, fname, msg):
     '''
         submit kaggle competition result with message
@@ -62,3 +71,4 @@ def check_kaggle_result(competition, fname=None):
             line += '(BEST) '
         print(line)
 
+# permutation importance
