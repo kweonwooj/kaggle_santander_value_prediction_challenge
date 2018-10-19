@@ -1,4 +1,4 @@
-# Kaggle/Santander Product Recommendation
+# Kaggle/Santander Value Prediction
 
 <div align="center">
   <img src="rsc/logo.png"><br><br>
