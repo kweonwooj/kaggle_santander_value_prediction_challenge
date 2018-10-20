@@ -38,12 +38,8 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
 - for `Exp 01`, see `code/[LB 1.53769] [FE] feature selection, feature interaction [Model] LightGBM.ipynb`
 - for `Exp 02`, see `code/[LB 1.37246] [FE] feature selection, pca, statistical features [Model] Catboost, XGBoost, LightGBM.ipynb`
 
-## References
-- most voted [EDA](https://www.kaggle.com/headsortails/breaking-bank-santander-eda)
-- [leakage](https://www.kaggle.com/johnfarrell/giba-s-property-extended-extended-result)
-- baseline using leak
-  - https://www.kaggle.com/tezdhar/breaking-lb-fresh-start
-  - https://www.kaggle.com/johnfarrell/breaking-lb-fresh-start-with-lag-selection
-  - https://www.kaggle.com/nulldata/jiazhen-to-armamut-via-gurchetan1000-0-56
-- R-based code singleXGB [LB 0.5178](https://www.kaggle.com/titericz/winner-model-giba-single-xgb-lb0-5178)
-- R-based code [LB 0.52785](https://www.kaggle.com/rsakata/21st-place-solution-bug-fixed-private-0-52785)
+## TODO
+- [ ] reproduce Jack's code in python
+  - [code LB 0.52785](https://www.kaggle.com/rsakata/21st-place-solution-bug-fixed-private-0-52785)
+- [ ] reproduce Giba's code (only non-leakage part) in python
+  - [code LB 0.5178](https://www.kaggle.com/titericz/winner-model-giba-single-xgb-lb0-5178)
