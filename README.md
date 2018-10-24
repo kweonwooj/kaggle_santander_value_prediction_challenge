@@ -43,3 +43,4 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
   - [code LB 0.52785](https://www.kaggle.com/rsakata/21st-place-solution-bug-fixed-private-0-52785)
 - [ ] reproduce Giba's code (only non-leakage part) in python
   - [code LB 0.5178](https://www.kaggle.com/titericz/winner-model-giba-single-xgb-lb0-5178)
+- use sample synthetic data to show whether my python code is doing what is intended (unit-test)
