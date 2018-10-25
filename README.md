@@ -31,16 +31,19 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
 | baseline | - | 1.93257 | - | 1.87086 | 
 | [Exp 01] Feature Selection & Feature Interaction + LightGBM | - | 1.57676 | - | 1.53769 | 
 | [Exp 02] Feature Selection & PCA & Statistical features + CatBoost/XGBoost/LightGBM | - | 1.41484 | - | 1.37273
+| leakage model | - | - | - | - | 
+
 
 ## How to Run
+- `baseline` : `python code/baseline.py`
+- `Exp 01`, see `code/[LB 1.53769] [FE] feature selection, feature interaction [Model] LightGBM.ipynb`
+- `Exp 02`, see `code/[LB 1.37246] [FE] feature selection, pca, statistical features [Model] Catboost, XGBoost, LightGBM.ipynb`
+- `leakage model` : `python code/leakage_model.py`
+  - leakage model performs very slow (about 8+ hours) due to pandas merge operation of `(40k, 4k) x (40k, 4k)` in Line 68
+  - merge operation in R is much faster. Cudos to Jack for his elegant and efficient code!
 
-- for `baseline`, see `code/baseline.py`
-- for `Exp 01`, see `code/[LB 1.53769] [FE] feature selection, feature interaction [Model] LightGBM.ipynb`
-- for `Exp 02`, see `code/[LB 1.37246] [FE] feature selection, pca, statistical features [Model] Catboost, XGBoost, LightGBM.ipynb`
 
-## TODO
-- [ ] reproduce Jack's code in python
-  - [code LB 0.52785](https://www.kaggle.com/rsakata/21st-place-solution-bug-fixed-private-0-52785)
-- [ ] reproduce Giba's code (only non-leakage part) in python
-  - [code LB 0.5178](https://www.kaggle.com/titericz/winner-model-giba-single-xgb-lb0-5178)
-- use sample synthetic data to show whether my python code is doing what is intended (unit-test)
+## What I've learnt
+- experienced porting R code into Python code. R code does perform faster in merge operations. I conducted profiling to optimize Python code, but could not resolve bottleneck of pandas merge on multiple columns.
+- improved pandas skills while porting to Python, especially on `pd.merge()`
+- lesson : anonymized data with leakage has little room for feature engineering. still amazed how Giba found the initial clue to the leakage.
