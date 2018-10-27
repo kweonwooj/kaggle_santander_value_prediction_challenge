@@ -15,7 +15,7 @@ trn['set'] = 'train'
 tst['set'] = 'test'
 tst['target'] = np.nan
 
-data = pd.concat([trn, tst], axis=0).reset_index(drop=True)
+data = pd.concat([trn, tst], axis=0, sort=False).reset_index(drop=True)
 
 # 40 time-series columns (source of leakage)
 cols = ['f190486d6', '58e2e02e6', 'eeb9cd3aa', '9fd594eec', '6eef030c1',
@@ -80,13 +80,17 @@ for it in range(1,3):
                 leaky_rows_prev_id_list = leaky_rows.ID_prev.unique().tolist()
                 idx = (leaky_row_temp.ID.apply(lambda x : x not in leaky_rows_id_list)) & (leaky_row_temp.ID_prev.apply(lambda x : x not in leaky_rows_prev_id_list))
                 leaky_row_temp = leaky_row_temp[idx].reset_index(drop=True)
-                leaky_rows = pd.concat([leaky_rows, leaky_row_temp], axis=0).reset_index(drop=True)
+                leaky_rows = pd.concat([leaky_rows, leaky_row_temp], axis=0, sort=False).reset_index(drop=True)
 
     # omit confusing leaks
-    #omit.ID <- leaky.rows[, .N, by=.(ID, lag)][N>1]$ID
-    #omit.ID_prev <- leaky.rows[, .N, by=.(ID_prev, lag)][N>1]$ID_prev
-    #leaky.rows <- leaky.rows[!(ID %in% omit.ID | ID_prev %in% omit.ID_prev)]
+    leaky_rows['ID_lag_concat'] = leaky_rows.ID + '_' + leaky_rows.lag.map(str)
+    leaky_rows['ID_prev_lag_concat'] = leaky_rows.ID_prev + '_' + leaky_rows.lag.map(str)
+    omit_id = [l.split('_')[0] for l in leaky_rows.ID_lag_concat.value_counts()[leaky_rows.ID_lag_concat.value_counts() > 1].index.tolist()]
+    omit_id_prev = [l.split('_')[0] for l in leaky_rows.ID_prev_lag_concat.value_counts()[leaky_rows.ID_prev_lag_concat.value_counts() > 1].index.tolist()]
 
+    leaky_rows = leaky_rows[leaky_rows.ID.apply(lambda x: x not in omit_id)]
+    leaky_rows = leaky_rows[leaky_rows.ID_prev.apply(lambda x: x not in omit_id_prev)]
+    leaky_rows = leaky_rows[['ID', 'ID_prev', 'target', 'lag']].reset_index(drop=True)
 
     ## find the first row for each customer ##
     leaky_rows['ID_first'] = leaky_rows.ID_prev
@@ -111,7 +115,7 @@ for it in range(1,3):
     tmp = data[data.ID.apply(lambda x: x in leaky_rows_id_list)][['ID', 'target']]
     tmp['ID_first'] = tmp.ID
     tmp['lag'] = 0
-    leaky_rows = pd.concat([leaky_rows, tmp], axis=0).sort_values(by=['ID_first', 'lag'])
+    leaky_rows = pd.concat([leaky_rows, tmp], axis=0, sort=False).sort_values(by=['ID_first', 'lag'])
 
 
     ## get the target values by leaks ##
@@ -228,7 +232,7 @@ del data
 # add leaky rows of test data to training data
 tst.loc[(tst['target_leak'] < 30000) | (tst['target_leak'] > 4e7), 'target_leak'] = np.nan
 tst['target'] = tst['target_leak']
-trn = pd.concat([trn, tst[~tst.target.isnull()]], axis=0)
+trn = pd.concat([trn, tst[~tst.target.isnull()]], axis=0, sort=False)
 trn.target = np.log1p(trn.target)
 
 temp = leaky_cols.sort_values(by='nonzero', ascending=False).drop_duplicates('latest', keep='first')[['latest', 'nonzero']].reset_index(drop=True)
