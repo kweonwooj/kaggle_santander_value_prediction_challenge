@@ -18,19 +18,19 @@ tst['target'] = np.nan
 data = pd.concat([trn, tst], axis=0, sort=False).reset_index(drop=True)
 
 # 40 time-series columns (source of leakage)
-cols = ['f190486d6', '58e2e02e6', 'eeb9cd3aa', '9fd594eec', '6eef030c1',
-             '15ace8c9f', 'fb0f5dbfe', '58e056e12', '20aa07010', '024c577b9',
-             'd6bb78916', 'b43a7cfd5', '58232a6fb', '1702b5bf0', '324921c7b',
-             '62e59a501', '2ec5b290f', '241f0f867', 'fb49e4212', '66ace2992',
-             'f74e8f13d', '5c6487af1', '963a49cdc', '26fc93eb7', '1931ccfdd',
-             '703885424', '70feb1494', '491b9ee45', '23310aa6f', 'e176a204a',
-             '6619d81fc', '1db387535', 'fc99f9426', '91f701ba2', '0572565c2',
-             '190db8488', 'adb64ff71', 'c47340d97', 'c5a231d81', '0ff32eb98']
+target_cols = ['f190486d6', '58e2e02e6', 'eeb9cd3aa', '9fd594eec', '6eef030c1',
+               '15ace8c9f', 'fb0f5dbfe', '58e056e12', '20aa07010', '024c577b9',
+               'd6bb78916', 'b43a7cfd5', '58232a6fb', '1702b5bf0', '324921c7b',
+               '62e59a501', '2ec5b290f', '241f0f867', 'fb49e4212', '66ace2992',
+               'f74e8f13d', '5c6487af1', '963a49cdc', '26fc93eb7', '1931ccfdd',
+               '703885424', '70feb1494', '491b9ee45', '23310aa6f', 'e176a204a',
+               '6619d81fc', '1db387535', 'fc99f9426', '91f701ba2', '0572565c2',
+               '190db8488', 'adb64ff71', 'c47340d97', 'c5a231d81', '0ff32eb98']
 
 # align time-series column to lag
-leaky_cols = pd.DataFrame({'col': cols})
+leaky_cols = pd.DataFrame({'col': target_cols})
 leaky_cols['lag'] = np.arange(len(leaky_cols))
-leaky_cols['latest'] = cols[0]
+leaky_cols['latest'] = target_cols[0]
 
 # get leak data
 for it in range(1,3):
@@ -120,16 +120,16 @@ for it in range(1,3):
 
     ## get the target values by leaks ##
     leaky_rows['target_leak'] = np.nan
-    leaky_rows = leaky_rows.merge(data[['ID'] + cols], on='ID', how='inner')
+    leaky_rows = leaky_rows.merge(data[['ID'] + target_cols], on='ID', how='inner')
     for i in range(1, 41):
         tmp = leaky_rows[['ID_first', 'lag']]
         tmp['lag'] += i + 1
 
         # select lag values
-        temp = tmp.merge(leaky_rows[['ID_first', 'lag'] + [cols[i - 1]]], on=['ID_first', 'lag'], how='left')
+        temp = tmp.merge(leaky_rows[['ID_first', 'lag'] + [target_cols[i - 1]]], on=['ID_first', 'lag'], how='left')
         idx = leaky_rows.target_leak.isnull()
         # get lag values!
-        leaky_rows.loc[idx, 'target_leak'] = temp[cols[i - 1]][idx]
+        leaky_rows.loc[idx, 'target_leak'] = temp[target_cols[i - 1]][idx]
 
     temp = leaky_rows[~leaky_rows.target.isnull()]
     temp['error'] = np.abs(temp.target - temp.target_leak)
@@ -249,12 +249,12 @@ exp_vars = target_cols + ['mean_{}'.format(i) for i in range(50)] + ['logmean_{}
 params = {
     'eta' : 0.01,
     'gamma' : 0,
-    'max_depth': 10,
+    'max_depth': 12,
     'min_child_weight': 8,
     'max_delta_step': 0,
     'subsample': 0.8,
     'colsample_bytree': 1,
-    'colsample_bylevel': 0.2,
+    'colsample_bylevel': 0.4,
     'lambda' : 1,
     'alpha': 1,
     'objective': 'reg:linear',
