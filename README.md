@@ -35,15 +35,22 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
 
 
 ## How to Run
-- `baseline` : `python code/baseline.py`
-- `Exp 01`, see `code/[LB 1.53769] [FE] feature selection, feature interaction [Model] LightGBM.ipynb`
-- `Exp 02`, see `code/[LB 1.37246] [FE] feature selection, pca, statistical features [Model] Catboost, XGBoost, LightGBM.ipynb`
-- `leakage model` : `python code/leakage_model.py`
-  - leakage model performs very slow (about 8+ hours) due to pandas merge operation of `(40k, 4k) x (40k, 4k)` in Line 68
-  - merge operation in R is much faster. Cudos to Jack for his elegant and efficient code!
+```
+# for baseline,
+python code/baseline.py
 
+# for [Exp 01], follow
+code/[LB 1.53769] [FE] feature selection, feature interaction [Model] LightGBM.ipynb
+
+# for [Exp 02], follow
+code/[LB 1.37246] [FE] feature selection, pca, statistical features [Model] Catboost, XGBoost, LightGBM.ipynb
+
+# for leakage model,
+# (python version of leakage model is very slow (about 8+ hours) due to pandas merge op over [40k, 4k] x [40k, 4k] in Line 68
+python code/leakage_model.py
+```
 
 ## What I've learnt
-- experienced porting R code into Python code. R code does perform faster in merge operations. I conducted profiling to optimize Python code, but could not resolve bottleneck of pandas merge on multiple columns.
+- experienced porting R code into Python code. R code does perform faster in merge operations. I conducted profiling to optimize Python code, but could not resolve bottleneck of pandas merge on multiple columns. Cudos to Jack for his elegant and efficient code!
 - improved pandas skills while porting to Python, especially on `pd.merge()`
-- lesson : anonymized data with leakage has little room for feature engineering. still amazed how Giba found the initial clue to the leakage.
+- lessons learnt : anonymized data with leakage has little room for feature engineering. still amazed how Giba and other kagglers found the initial clue to the leakage.
