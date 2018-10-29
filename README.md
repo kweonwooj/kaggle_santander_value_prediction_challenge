@@ -35,7 +35,12 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
 
 
 ## How to Run
+- Python 2.7
+
 ```
+# install pre-requisites
+pip install -r requirements.txt
+
 # for baseline,
 python code/baseline.py
 
