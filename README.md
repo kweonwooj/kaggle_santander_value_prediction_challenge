@@ -31,7 +31,7 @@ I have decided to accept the nature of data leakage in Kaggle competition. Inste
 | baseline | 1.99915 | 1.93257 | 4,125 | 1.87086 | 4,106
 | [Exp 01] Feature Selection & Feature Interaction + LightGBM | 1.54058 | 1.57676 | 3,377 | 1.53769 | 3,379
 | [Exp 02] Feature Selection & PCA & Statistical features + CatBoost/XGBoost/LightGBM | 1.33945 | 1.41484 | 2,211 | 1.37273 | 2,206
-| leakage model | - | **0.48785** | **58** | **0.53032** | **28**
+| leakage model (Gold medal) | - | **0.48785** | **58** | **0.53032** | **28**
 
 
 ## How to Run

@@ -302,5 +302,5 @@ check_kaggle_result(competition_name, fname)
 '''
 fileName           date                 description       status    publicScore  privateScore
 -----------------  -------------------  ----------------  --------  -----------  ------------
-leakage_solution   2018-10-17 08:52:46                    complete  1.93257      1.87086
+leakage_solution   2018-10-17 08:52:46                    complete  0.48785      0.53032
 '''
